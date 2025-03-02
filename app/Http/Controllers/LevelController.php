@@ -12,7 +12,10 @@ class LevelController extends Controller
 
       //$row = DB::update('update m_level set level_nama=? where level_kode=?',['Pelanggan','CUS']);
 
-      $row = DB::delete('delete from m_level where level_kode=?',['CUS']);
-        return 'Delete data succesfull!. Total data was deleted:'.$row.'baris';
+     // $row = DB::delete('delete from m_level where level_kode=?',['CUS']);
+       // return 'Delete data succesfull!. Total data was deleted:'.$row.'baris';
+
+       $data = DB::select('select * from m_level');
+       return view('level',['data' => $data]);
     }
 }
