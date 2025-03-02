@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class LevelController extends Controller
 {
     public function index(){
-      DB::insert('insert into m_level(level_kode,level_nama,created_at)values(?,?,?)',['CUS','Customer',now()]);
+      //  DB::insert('insert into m_level(level_kode,level_nama,created_at)values(?,?,?)',['CUS','Customer',now()]);
+
+      $row = DB::update('update m_level set level_nama=? where level_kode=?',['Pelanggan','CUS']);
+        return 'Update data succesfull!. Total data was updated:'.$row.'baris';
     }
 }
