@@ -14,9 +14,12 @@ class KategoriController extends Controller
         'created_at'=>now()
     ];
     DB::table('m_kategori')->insert($data);
-    return 'Insert a new data successful!';*/
+    return 'Insert a new data successful!';
 
     $row = DB::table('m_kategori')->where('kategori_kode','MKP')->update(['kategori_nama'=>'Sunscreen']);
-    return 'Update data succesfull!. Total data was updated:'.$row.'baris';
+    return 'Update data succesfull!. Total data was updated:'.$row.'baris';*/
+   
+    $row = DB::table('m_kategori')->where('kategori_kode','MKP')->delete();
+    return 'delete data succesfull!. Total data was updated:'.$row.'baris';
 }
 }
