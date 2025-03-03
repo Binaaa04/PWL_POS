@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Userm;
-use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use function Laravel\Prompts\password;
 
@@ -13,14 +12,14 @@ class UserController extends Controller
     public function index(){
         //insert data using Eloquent Model
         $data=[
-            'username'=>'Customer',
-            'nama'=>'Emina',
+            'level_id'=> 3,
+            'username'=>'kasir',
+            'name'=>'staff/kasir',
            'password'=>HASH::make('12345'),
-            'level_id'=> 4
         ];
         //tambahkan data ke tabel m_user
-        userm::insert($data);         //akses model ke userm
-        $user = userm::all();
+        Userm::insert($data);         //akses model ke userm
+        $user = Userm::all();
         return view('user',['data'=>$user]);
     }
     }
