@@ -11,7 +11,15 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-    //akses model ke userm
+        //insert data using Eloquent Model
+        $data=[
+            'username'=>'Customer',
+            'nama'=>'Emina',
+           'password'=>HASH::make('12345'),
+            'level_id'=> 4
+        ];
+        //tambahkan data ke tabel m_user
+        userm::insert($data);         //akses model ke userm
         $user = userm::all();
         return view('user',['data'=>$user]);
     }
