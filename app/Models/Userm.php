@@ -15,7 +15,6 @@ class Userm extends Model
     protected $fillable = [
         'username',
         'name',
-        'password',
         'level_id'
     ];
     public function level()
