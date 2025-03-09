@@ -17,4 +17,5 @@ Route::post('/user/add_save', [UserController::class, 'add_save'])->name('user.a
 
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+Route::put('/user/edit_save/{id}', [UserController::class, 'edit_save'])->name('user.edit_save');
 

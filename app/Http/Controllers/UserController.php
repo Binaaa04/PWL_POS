@@ -26,4 +26,17 @@ class UserController extends Controller
         ]);
         return redirect('/user');
     }
+    public function edit($id){
+        $user = Userm:: find($id);
+        return view('user_edit',['data'=>$user]);
+    }
+    public function edit_save($id, Request $request){
+        $user = Userm::find($id);
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->level_id = $request->level_id;
+        $user -> save();
+        return redirect('/user');
+
+    }
 }
