@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index(){
         $user = Userm::where('level_id',[2,1,3])->count();
-        //dd($user);
+        dd($user);
         return view('user',['data'=>$user]);
     }
     }
