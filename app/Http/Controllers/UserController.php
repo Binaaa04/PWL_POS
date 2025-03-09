@@ -11,13 +11,22 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-        $user = Userm::firstOrNew([
-            'username'=>'manager33',
-            'name'=>'Manager Tiga Tiga',
+        $user = Userm::create([
+            'username'=>'manager55',
+            'name'=>'Manager55',
             'password' => Hash::make('12345'),
             'level_id'=> 2
         ]);
+        $user->username = 'manager56';
+        $user->isDirty(); //true
+        $user->isDirty('username'); //true
+        $user->isDirty('name'); //false
+        $user->isDirty(['name','username']); //true
         $user->save();
-        return view('user',['data'=>$user]);
+        $user->isClean(); //false
+        $user->isClean('username'); //false
+        $user->isClean('name'); //true
+        $user->isClean(['name','username']); //false
+       dd($user->isDirty());
     }
     }
