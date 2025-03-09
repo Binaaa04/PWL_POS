@@ -20,7 +20,7 @@
             <td>{{ $d->username }}</td>
             <td>{{ $d->name }}</td>
             <td>{{ $d->level_id }}</td>
-            <td><a href={{route('/user/edit',$d->user_id)}}>Edit</a>|<a href={{route('/user/delete',$d->user_id)}}>Delete</td>
+            <td><a href={{route('user.edit',$d->user_id)}}>Edit</a>|<a href={{route('user.delete',$d->user_id)}}>Delete</td>
         </tr>
         @endforeach
     </table>
