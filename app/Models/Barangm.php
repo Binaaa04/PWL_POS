@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Barangm extends Model
@@ -20,8 +21,8 @@ class Barangm extends Model
         'harga_jual',
         'kategori_id'
     ];
-    public function kategori():HasMany
+    public function kategori():BelongsTo
     {
-        return $this->hasMany(Kategorim::class, 'kategori_id','kategori_id');
+        return $this->belongsTo(Kategorim::class, 'kategori_id','kategori_id');
     }
 }
