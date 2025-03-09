@@ -11,9 +11,10 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-        $user = Userm::all();
+        $user = Userm::with('level')->get(); // ubah 'm_level' jadi 'level'
         return view('user',['data'=>$user]);
     }
+    
     public function adding(){
         return view('user_add');
     }

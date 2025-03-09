@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kategorim extends Model
 {
@@ -16,4 +17,7 @@ class Kategorim extends Model
         'kategori_kode',
         'kategori_nama',
     ];
+    public function barang():HasMany{
+        return $this->hasMany(Barangm::class, 'barang_id', 'barang_id');
+    }
 }

@@ -11,7 +11,9 @@
             <th>ID</th>
             <th>Username</th>
             <th>Name</th>
-            <th>ID User Level</th>
+            <th>TTD Level User</th>
+            <th>Kode Level</th>
+            <th>Nama Level</th>
             <th>Action</th>
         </tr>
         @foreach ($data as $d)
