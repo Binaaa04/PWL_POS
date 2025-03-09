@@ -12,7 +12,7 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-        $user = Userm::findOrFail(1);
+        $user = Userm::where('username','manager9')->firstOrFail();
         return view('user',['data'=>$user]);
     }
     }
