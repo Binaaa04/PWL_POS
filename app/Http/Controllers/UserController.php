@@ -12,21 +12,16 @@ class UserController extends Controller
 {
     public function index(){
         $user = Userm::create([
-            'username'=>'manager55',
-            'name'=>'Manager55',
+            'username'=>'manager11',
+            'name'=>'Manager11',
             'password' => Hash::make('12345'),
             'level_id'=> 2
         ]);
-        $user->username = 'manager56';
-        $user->isDirty(); //true
-        $user->isDirty('username'); //true
-        $user->isDirty('name'); //false
-        $user->isDirty(['name','username']); //true
-        $user->save();
-        $user->isClean(); //false
-        $user->isClean('username'); //false
-        $user->isClean('name'); //true
-        $user->isClean(['name','username']); //false
-       dd($user->isDirty());
+        $user->username = 'manager12';
+        $user->wasChanged(); //true
+        $user->wasChanged('username'); //true
+        $user->wasChanged('name'); //false
+        $user->wasChanged(['name','username']); //true
+        dd($user->wasChanged(['name','username']));
     }
     }
