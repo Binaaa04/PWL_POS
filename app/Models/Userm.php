@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Userm extends Model
 {
@@ -20,6 +21,6 @@ class Userm extends Model
     ];
     public function level()
     {
-        return $this->belongsTo(Levelm::class, 'level_id');
+       return $this->hasOne(Levelm::class);
     }
 }
