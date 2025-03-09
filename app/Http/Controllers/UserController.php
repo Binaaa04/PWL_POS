@@ -11,11 +11,9 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-        $user = Userm::firstOrCreate([
-            'username'=>'manager22',
-            'name'=>'Manager Dua Dua',
-            'password' => Hash::make('12345'),
-            'level_id'=>2
+        $user = Userm::firstOrNew([
+            'username'=>'manager',
+            'name'=>'Manager'
         ]);
         return view('user',['data'=>$user]);
     }
