@@ -11,7 +11,7 @@
             <th>ID</th>
             <th>Username</th>
             <th>Name</th>
-            <th>TTD Level User</th>
+            <th>ID Level User</th>
             <th>Kode Level</th>
             <th>Nama Level</th>
             <th>Action</th>
@@ -22,7 +22,9 @@
             <td>{{ $d->username }}</td>
             <td>{{ $d->name }}</td>
             <td>{{ $d->level_id }}</td>
-            <td><a href={{route('user.edit',$d->user_id)}}>Edit</a>|<a href={{route('user.delete',$d->user_id)}}>Delete</td>
+            <td>{{ $d->level->level_nama ?? '-' }}</td>
+            <td>{{ $d->level->level_kode ?? '-' }}</td>
+            <td><a href={{route('user.edit',$d->user_id)}}>Edit</a>|<a href={{route('user.delete',$d->user_id)}}>Delete</a></td>
         </tr>
         @endforeach
     </table>

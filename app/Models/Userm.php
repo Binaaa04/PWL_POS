@@ -21,6 +21,6 @@ class Userm extends Model
     ];
     public function level()
     {
-       return $this->hasOne(Levelm::class);
+        return $this->hasOne(Levelm::class, 'level_id', 'level_id');
     }
 }

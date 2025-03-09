@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Levelm extends Model
 {
@@ -17,7 +18,7 @@ class Levelm extends Model
         'level_kode',
         'level_nama',
     ];
-    public function user():BelongsTo{
-        return $this->belongsTo(Userm::class);
+    public function users():HasMany{
+        return $this->hasMany(Userm::class);
     }
 }
