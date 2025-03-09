@@ -12,7 +12,7 @@ use function Laravel\Prompts\password;
 class UserController extends Controller
 {
     public function index(){
-        $user = Userm::where('level_id',[2,1,3])->count();
+        $user = Userm::where('level_id',2)->count();
         dd($user);
         return view('user',['data'=>$user]);
     }
