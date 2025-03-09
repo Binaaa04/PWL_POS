@@ -10,15 +10,19 @@
         <tr>
             <th>ID</th>
             <th>Username</th>
-            <th>Nama</th>
-            <th>ID Level Pengguna</th>
+            <th>Name</th>
+            <th>ID User Level</th>
+            <th>Action</th>
         </tr>
+        @foreach ($data as $d)
         <tr>
-            <td>{{ $data->user_id }}</td>
-            <td>{{ $data->username }}</td>
-            <td>{{ $data->name }}</td>
-            <td>{{ $data->level_id }}</td>
+            <td>{{ $d->user_id }}</td>
+            <td>{{ $d->username }}</td>
+            <td>{{ $d->name }}</td>
+            <td>{{ $d->level_id }}</td>
+            <td><a href={{route('/user/edit',$d->user_id)}}>Edit</a>|<a href={{route('/user/delete',$d->user_id)}}>Delete</td>
         </tr>
+        @endforeach
     </table>
 </body>
 </html>
