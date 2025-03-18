@@ -6,10 +6,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', [WelcomeController::class, 'index']);
+
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/user', [UserController::class, 'index'])->name('user');

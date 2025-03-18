@@ -7,7 +7,7 @@
 placeholder="Search" aria-label="Search"> 
       <div class="input-group-append"> 
         <button class="btn btn-sidebar"> 
-          < class="fas fa-search fa-fw"></i> 
+          <i class="fas fa-search fa-fw"></i> 
         </button> 
       </div> 
     </div> 
