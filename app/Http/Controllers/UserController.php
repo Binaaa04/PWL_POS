@@ -7,24 +7,55 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
-use function Laravel\Prompts\password;
-
 class UserController extends Controller
 {
     public function index(){
       $breadcrumb =(object)[
-        'title'=>'User List',
+        'title'=>'User ',
         'list'=>['Home','User']
       ];
       $page=(object)[
-        'title'=>'list of users registered in the system'
+        'title'=>'user list integreted in system'
       ];
       $activeMenu = 'user'; //set menu yang sedang aktif
       return view('user.index',['breadcrumb'=>$breadcrumb,'page'=>$page,'activeMenu'=>$activeMenu]);
     }
+    public function create(){
+        $breadcrumb=(object)[
+        'title'=>'Add New User',
+        'list'=> ['home','user','tambah']
+        ];
+        $page = (object)[
+            'title'=>'tambah user baru'
+        ];
+        $level = Levelm::all(); //ambil data level untuk ditampilkan di form
+        $activeMenu = 'user'; //set menu yang sedang aktif
+        return view('user.create',['breadcrumb'=>$breadcrumb, 'page'=>$page, 'level'=>$level,'activeMenu'=>$activeMenu]);
+    }
+
+    public function store(Request $request){
+        $request -> validate([
+            //username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_user kolom username
+            'username'=>'required|string|min:3|unique:m_user,username',
+            'name'=>'required|string|max:100',
+            'password'=>'required|min:5',
+            'level_id'=>'required|integer'
+        ]);
+
+        Userm::create([
+            'username'=> $request->username,
+            'name'=>$request->name,
+            'password'=>bcrypt($request->password), //password dienskripsi sebelum disimpan
+            'level_id'=> $request->level_id
+        ]);
+        return redirect ('/user')->with('success','data user berhasil disimpan');
+    }
+
+
+    // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $users = Userm::select('user_id', 'username', 'nama', 'level_id')
+        $users = Userm::select('user_id', 'username', 'name', 'level_id')
                 ->with('level');
 
         return DataTables::of($users)
@@ -40,10 +71,10 @@ class UserController extends Controller
             })
             ->rawColumns(['action']) // Menandai bahwa kolom action mengandung HTML
             ->make(true);
-    }
+        }
 
     
-    /*public function adding(){
+    public function adding(){
         return view('user_add');
     }
     public function add_save(Request $request){
@@ -71,5 +102,6 @@ class UserController extends Controller
     public function delete($id){
         $user = Userm::find($id);
         $user->delete();
-        return redirect('/user');*/
+        return redirect('/user');
     }
+}

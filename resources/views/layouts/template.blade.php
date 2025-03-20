@@ -19,7 +19,9 @@
 
   <!--Theme style-->
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/adminlte.min.css')}}">
+  @stack('css')<!-- digunakan utk memanggil custom css dari perintah push ('css')pd msg2 view-->
 </head>
+
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -71,7 +73,7 @@
 <script src="{{asset('/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
 <script src="{{asset('/adminlte/plugins/jszip/jszip.min.js')}}"></script>
 <script src="{{asset('/adminlte/plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('/adminlte/plugins/pdfmake/vds_fonts.js')}}"></script>
+<script src="{{asset('/adminlte/plugins/pdfmake/vfs_fonts.js')}}"></script>
 <script src="{{asset('/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
