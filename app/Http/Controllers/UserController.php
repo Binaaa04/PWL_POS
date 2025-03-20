@@ -51,6 +51,20 @@ class UserController extends Controller
         return redirect ('/user')->with('success','data user berhasil disimpan');
     }
 
+    //menampilkan detail user
+    public function show(string $id){
+        $user = Userm::with('level')->find($id);
+        $breadcrumb = (object)[
+            'title'=>'detail user',
+            'list'=>['home','user','detail']
+        ];
+
+        $page = (object)[
+            'title'=>'detail user'
+        ];
+        $activeMenu = 'user';
+        return view('user.show',['breadcrumb'=>$breadcrumb,'page'=>$page,'user'=>$user,'activeMenu'=>$activeMenu]);
+    }
 
     // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)
