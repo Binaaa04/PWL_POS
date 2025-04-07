@@ -18,7 +18,10 @@ class UserController extends Controller
         'title'=>'user list integreted in system'
       ];
       $activeMenu = 'user'; //set menu yang sedang aktif
-      return view('user.index',['breadcrumb'=>$breadcrumb,'page'=>$page,'activeMenu'=>$activeMenu]);
+
+      $level = Levelm::all(); //ambil data level utk filter level
+
+      return view('user.index',['breadcrumb'=>$breadcrumb,'page'=>$page,'level'=>$level,'activeMenu'=>$activeMenu]);
     }
     public function create(){
         $breadcrumb=(object)[
@@ -71,6 +74,11 @@ class UserController extends Controller
     {
         $users = Userm::select('user_id', 'username', 'name', 'level_id')
                 ->with('level');
+        
+    //filter data user bedasarkan level_id
+        if ($request->level_id) {
+            $users->where('level_id',$request->level_id);
+        }
 
         return DataTables::of($users)
             ->addIndexColumn() // Menambahkan index nomor urut
