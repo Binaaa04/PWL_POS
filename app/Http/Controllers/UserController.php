@@ -102,8 +102,38 @@ class UserController extends Controller
     }
     public function edit($id){
         $user = Userm:: find($id);
-        return view('user_edit',['data'=>$user]);
+        $level = Levelm::all();
+
+        $breadcrumb =(object)[
+            'title'=>'User ',
+            'list'=>['Home','User','Edit']
+          ];
+          $page=(object)[
+            'title'=>'Edit User'
+          ];
+          $activeMenu = 'user'; //set menu yang sedang aktif
+
+        return view('user.edit',['breadcrumb'=>$breadcrumb, 'page'=>$page, 'user'=>$user, 'level'=>$level, 'activeMenu'=>$activeMenu]);
     }
+
+    public function update(Request $request, string $id){
+        $request->validate([
+           //username hrs diisi, berupa string, min 3 karakter, 
+           //dan bernilai unik di tabel m_user kolom username kecuali utk user dgn id yg sedang diedit 
+           'username'=> 'required|string|min:3|unique:m_user,username,'.$id.',user_id', 
+           'name'=> 'required|string|max:100',
+           'password'=> 'nullable|min:5',
+           'level_id'=> 'required|integer'
+        ]);
+        Userm::find($id)->update([
+            'username'=>$request->username,
+            'name'=>$request->name,
+            'password'=>$request->password ? bcrypt($request->password):Userm::find($id)->password,
+            'level_id'=>$request->level_id
+        ]);
+        return redirect('/user')->with('success','Successful change data');
+    }
+
     public function edit_save($id, Request $request){
         $user = Userm::find($id);
         $user->username = $request->username;
