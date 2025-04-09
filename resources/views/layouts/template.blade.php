@@ -17,6 +17,10 @@
 <link rel="stylesheet" href="{{asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+
+
   <!--Theme style-->
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/adminlte.min.css')}}">
   @stack('css')<!-- digunakan utk memanggil custom css dari perintah push ('css')pd msg2 view-->
@@ -63,6 +67,13 @@
 <script src="{{asset('adminlte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- jquery validation -->
+<script src="{{asset('adminlte/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('adminlte/plugins/jquery-validation/additional-methods.min.js')}}"></script>
+
+<!--sweetAlert2 -->
+<script src="{{asset('adminlte/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 <!--datatables & plugins -->
 <script src="{{asset('/adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
