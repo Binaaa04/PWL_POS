@@ -18,12 +18,19 @@ class LevelController extends Controller
     ];
     $activeMenu = 'level'; //set menu yang sedang aktif
 
-    return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+    $level = Levelm::all();
+
+    return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'level'=>$level]);
     }
 
     public function list(Request $request)
     {
         $levels = Levelm::select('level_id', 'level_kode', 'level_nama');
+
+        // Filter data user berdasarkan level_id 
+        if ($request->level_id) {
+            $levels->where('level_id', $request->level_id);
+        }
 
         return DataTables::of($levels)
             ->addIndexColumn()  // menambahkan kolom index / no urut (default name kolom: DT_RowIndex)  
