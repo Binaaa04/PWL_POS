@@ -40,4 +40,30 @@ return $btn;
 ->make(true);
 }
 
+public function create()
+    {
+        $breadcrumb = (object)[
+            'title' => 'Add New Level',
+            'list' => ['home', 'level', 'Add Level']
+        ];
+        $page = (object)[
+            'title' => 'Add new level data'
+        ];
+        $activeMenu = 'level'; //set menu yang sedang aktif
+        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            //username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_user kolom username
+            'level_kode' => 'required|string|min:3',
+            'level_nama' => 'required|string|max:100',
+        ]);
+
+        Levelm::create([
+            'level_kode' => $request->level_kode,
+            'level_nama' => $request->level_nama,
+        ]);
+        return redirect('/level')->with('success', 'level data succesfully changed');
+    }
 }
