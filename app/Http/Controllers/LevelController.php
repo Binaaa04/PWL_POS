@@ -55,7 +55,6 @@ public function create()
     public function store(Request $request)
     {
         $request->validate([
-            //username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_user kolom username
             'level_kode' => 'required|string|min:3',
             'level_nama' => 'required|string|max:100',
         ]);
@@ -66,4 +65,21 @@ public function create()
         ]);
         return redirect('/level')->with('success', 'level data succesfully changed');
     }
+
+        //menampilkan detail level
+        public function show(string $id)
+        {
+            $level = Levelm::find($id);
+    
+            $breadcrumb = (object)[
+                'title' => 'detail level',
+                'list' => ['home', 'level', 'detail']
+            ];
+    
+            $page = (object)[
+                'title' => 'detail level'
+            ];
+            $activeMenu = 'level';
+            return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        }
 }
