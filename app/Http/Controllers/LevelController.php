@@ -111,4 +111,19 @@ public function create()
         ]);
         return redirect('/level')->with('success', 'Successful change data');
     }
+
+    public function destroy(string $id)
+    {
+        $check = Levelm::find($id);
+        if (!$check) {
+            return redirect('/level')->with('error', 'Data not found');
+        }
+        try {
+            Levelm::destroy($id);
+            return redirect('/level')->with('success', 'level data successful deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+            return redirect('/level')->with('error', 'level data failed deleted because there is another table connected with this data');
+        }
+    }
 }
