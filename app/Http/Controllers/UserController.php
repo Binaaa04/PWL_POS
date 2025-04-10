@@ -276,4 +276,28 @@ confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';*/
         $user->delete();
         return redirect('/user');
     }
+
+    public function confirm_ajax(string $id){
+        $user = Userm::find($id);
+        return view('user.confirm_ajax',['user'=>$user]);
+    }
+
+    public function delete_ajax(Request $request, $id){
+        if ($request->ajax()||$request->wantsJson()) {
+            $user = Userm::find($id);
+            if ($user) {
+                $user->delete();
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'data successfully deleted'
+                ]);
+            } else {
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'data not found'
+                ]);
+            }  
+        }
+        return redirect('/');
+    }
 }
