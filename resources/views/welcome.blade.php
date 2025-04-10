@@ -8,7 +8,7 @@
         <div class="card-tools"></div>
     </div>
     <div class="card-body">
-        Selamat datang semua, ini adalah halaman utama dari aplikasi ini.
+        Hello everyone, this is the first page in the apps.
     </div>
 </div>
 @endsection

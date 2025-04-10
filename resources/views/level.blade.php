@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Level Pengguna</title>
+    <title>Data Level User</title>
 </head>
 <body>
-    <h1>Level Pengguna</h1>
+    <h1>Level User</h1>
     <table border="1" cellpadding="2" cellspacing="0">
         <tr>
             <th>ID Level</th>
-            <th>Kode Level</th>
-            <th>Nama Level</th>
+            <th>Level Code</th>
+            <th>Level Name</th>
         </tr>
         @foreach ($data as $d)
         <tr>

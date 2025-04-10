@@ -5,9 +5,8 @@
     <div class="card-header">
     <h3 class="card-title">{{ $page->title }}</h3>
     <div class="card-tools">
-      <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
-      <button onclick="modalAction('{{url('user/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
-      Ajax</button>
+      <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Add User Data</a>
+      <button onclick="modalAction('{{url('user/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Add User Data Ajax</button>
     </div>
     </div>
     <div class="card-body">
@@ -41,8 +40,7 @@
         <th>ID</th>
         <th>Username</th>
         <th>Name</th>
-        <th>User
-        Level</th>
+        <th>User Level</th>
         <th>Action</th>
       </tr>
       </thead>
@@ -114,6 +112,6 @@
       dataUser.ajax.reload();
     });
 
-    }); 
+    }); // Penutup $(document).ready
   </script>
 @endpush

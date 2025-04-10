@@ -3,15 +3,15 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <h5 class="modal-title" id="exampleModalLabel">Add Data User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Level Pengguna</label>
+                    <label>Level User</label>
                     <select name="level_id" id="level_id" class="form-control" required>
-                        <option value="">- Pilih Level -</option>
+                        <option value="">- Select Level -</option>
                         @foreach($level as $l)
                             <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
                         @endforeach
@@ -35,8 +35,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Back</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
                             $('#myModal').modal('hide');
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Berhasil',
+                                title: 'Success',
                                 text: response.message
                             });
                             dataUser.ajax.reload();
@@ -72,7 +72,7 @@
                             });
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Terjadi Kesalahan',
+                                title: 'Something Wrong',
                                 text: response.message
                             });
                         }

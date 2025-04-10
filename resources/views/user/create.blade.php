@@ -38,7 +38,7 @@
                     <div class="col-11">
                         <input type="text" class="form-control" id="name" name="name" value="{{ 
         old('name') }}" required>
-                        @error('nama')
+                        @error('name')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -55,8 +55,8 @@
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label"></label>
                     <div class="col-11">
-                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-sm btn-default ml-1" href="{{ url('user') }}">Kembali</a>
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        <a class="btn btn-sm btn-default ml-1" href="{{ url('user') }}">Back</a>
                     </div>
                 </div>
             </form>
