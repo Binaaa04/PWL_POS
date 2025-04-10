@@ -82,4 +82,33 @@ public function create()
             $activeMenu = 'level';
             return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
         }
+
+        public function edit($id)
+        {
+            $level = Levelm::find($id);
+    
+            $breadcrumb = (object)[
+                'title' => 'Level Data ',
+                'list' => ['Home', 'Level', 'Edit']
+            ];
+            $page = (object)[
+                'title' => 'Edit Level Data'
+            ];
+            $activeMenu = 'level'; //set menu yang sedang aktif
+    
+            return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        }
+
+        public function update(Request $request, string $id)
+    {
+        $request->validate([ 
+            'level_kode' => 'required|string|min:3',
+            'level_nama' => 'required|string|max:100',
+        ]);
+        Levelm::find($id)->update([
+            'level_kode' => $request->level_kode,
+            'level_nama' => $request->level_nama,
+        ]);
+        return redirect('/level')->with('success', 'Successful change data');
+    }
 }
