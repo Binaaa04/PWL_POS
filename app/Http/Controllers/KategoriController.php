@@ -120,4 +120,19 @@ class KategoriController extends Controller
         ]);
         return redirect('/kategori')->with('success', 'Successful change data');
     }
+
+     public function destroy(string $id)
+    {
+        $check = Kategorim::find($id);
+        if (!$check) {
+            return redirect('/kategori')->with('error', 'Data not found');
+        }
+        try {
+            Kategorim::destroy($id);
+            return redirect('/kategori')->with('success', 'kategori data successful deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+            return redirect('/kategori')->with('error', 'kategori data failed deleted because there is another table connected with this data');
+        }
+    }
 }
