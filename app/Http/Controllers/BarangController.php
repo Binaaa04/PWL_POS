@@ -26,7 +26,7 @@ use App\Models\Kategorim;
 
           public function list(Request $request)
           {
-              $barangs = Barangm::select('barang_id', 'barang_kode', 'barang_nama', 'harga_jual','harga_beli','kategori_id')->with('kategori');
+              $barangs = Barangm::select('barang_id', 'barang_kode', 'barang_nama', 'harga_beli','harga_jual','kategori_id')->with('kategori');
          
               return DataTables::of($barangs)
                   ->addIndexColumn()  // menambahkan kolom index / no urut (default name kolom: DT_RowIndex)  
@@ -41,5 +41,37 @@ use App\Models\Kategorim;
       })
       ->rawColumns(['action']) // memberitahu bahwa kolom action adalah html  
       ->make(true);
+      }
+      public function create()
+      {
+          $breadcrumb = (object)[
+              'title' => 'Add New Item',
+              'list' => ['Home', 'Item', 'Add Data']
+          ];
+          $page = (object)[
+              'title' => 'Add new item data'
+          ];
+          $kategori = Kategorim::all(); //ambil data kategori untuk ditampilkan di form
+          $activeMenu = 'item'; //set menu yang sedang aktif
+          return view('item.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+      }
+      public function store(Request $request)
+      {
+          $request->validate([
+              'barang_kode' => 'required|string|min:3',
+              'barang_nama' => 'required|string|max:100',
+              'harga_beli' => 'required|integer',
+              'harga_jual' => 'required|integer',
+              'kategori_id' => 'required|integer'
+          ]);
+  
+          Barangm::create([
+              'barang_kode' => $request->barang_kode,
+              'barang_nama' => $request->barang_nama,
+              'harga_beli' => $request->harga_beli,
+              'harga_jual' => $request->harga_jual,
+              'kategori_id' => $request->kategori_id
+          ]);
+          return redirect('/barang')->with('success', 'item data succesfully changed');
       }
      }
