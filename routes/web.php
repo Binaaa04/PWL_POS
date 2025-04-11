@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\BarangController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,8 @@ Route::group(['prefix'=>'level'], function(){
     Route::put('/{id}', [LevelController::class, 'update']); //menyimpan perubahan data level
     Route::delete('/{id}', [LevelController::class, 'destroy']); //menghapus data level
     Route::get('/create_ajax', [LevelController::class, 'create_ajax']); //menampilkan halaman form tambah level ajax
-    Route::post('/ajax', [LevelController::class, 'store_ajax']); //menyimpan data level ajax terbaru
+    Route::post('/ajax', [LevelController::class, 'store_ajax']); //menyimpan data user ajax terbaru
+
 });
 
 Route::group(['prefix'=>'kategori'], function(){
@@ -50,6 +52,19 @@ Route::group(['prefix'=>'kategori'], function(){
     Route::delete('/{id}', [KategoriController::class, 'destroy']); //menghapus data kategori
     Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); //menampilkan halaman form tambah kategori ajax
     Route::post('/ajax', [KategoriController::class, 'store_ajax']); //menyimpan data kategori ajax terbaru
+});
+
+Route::group(['prefix'=>'barang'], function(){
+    Route::get('/', [BarangController::class, 'index']); //menampilkan halaman awal barang
+    Route::post('/list', [BarangController::class, 'list']); //menampilkan data barang dalam bentuk json untuk datatables
+    Route::get('/create', [BarangController::class, 'create']); //menampilkan halaman form tambah barang
+    Route::post('/', [BarangController::class, 'store']); //menyimpan data barang terbaru
+    Route::get('/{id}', [BarangController::class, 'show']); //menampilkan detail barang
+    Route::get('/{id}/edit', [BarangController::class, 'edit']); //menampilkan halaman form edit barang
+    Route::put('/{id}', [BarangController::class, 'update']); //menyimpan perubahan data barang
+    Route::delete('/{id}', [BarangController::class, 'destroy']); //menghapus data barang
+    Route::get('/create_ajax', [BarangController::class, 'create_ajax']); //menampilkan halaman form tambah barang ajax
+    Route::post('/ajax', [BarangController::class, 'store_ajax']); //menyimpan data barang ajax terbaru
 });
 
 
