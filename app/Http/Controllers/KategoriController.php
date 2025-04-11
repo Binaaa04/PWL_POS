@@ -31,8 +31,8 @@ class KategoriController extends Controller
         $categories = Kategorim::select('kategori_id', 'kategori_kode', 'kategori_nama');
 
         // Filter data kategori berdasarkan kategori_id 
-        if ($request->kategori_id) {
-            $categories->where('kategori_id', $request->kategori_id);
+        if ($request->kategori_kode) {
+            $categories->where('kategori_kode', $request->kategori_kode);
         }
 
         return DataTables::of($categories)

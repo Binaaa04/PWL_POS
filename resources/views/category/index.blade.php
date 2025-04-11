@@ -15,6 +15,22 @@
           @if (session('error'))
           <div class="alert alert-danger">{{session('error')}}</div>
         @endif
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group row">
+            <label class="col-1 control-label col-form-label">Filter:</label>
+            <div class="col-3">
+            <select class="form-control" id="kategori_kode" name="kategori_kode" required>
+              <option value="">- all -</option>
+              @foreach ($kategori as $item)
+            <option value="{{$item->kategori_kode}}">{{$item->kategori_nama}}</option>
+          @endforeach
+            </select>
+            <small class="form-text text-muted">kategori Data</small>
+            </div>
+          </div>
+          </div>
+        </div>
         <table class="table table-bordered table-striped table-hover table-sm" 
 id="table_kategori"> 
           <thead> 
@@ -37,7 +53,10 @@ id="table_kategori">
 ajax: { 
               "url": "{{ url('kategori/list') }}", 
               "dataType": "json", 
-              "type": "POST" 
+              "type": "POST" ,
+              "data":function(d){
+                d.kategori_kode = $('#kategori_kode').val();
+              }
 }, 
 columns: [ 
 { 
@@ -63,9 +82,11 @@ columns: [
               className: "", 
               orderable: false,     
               searchable: false     
-} 
-] 
+}] 
 }); 
+$('#kategori_kode').on('change', function () {
+      datakategori.ajax.reload();
+    });
 }); 
   </script> 
 @endpush 
