@@ -76,5 +76,21 @@ class KategoriController extends Controller
         ]);
         return redirect('/kategori')->with('success', 'Category data succesfully changed');
     }
+    public function show(string $id)
+    {
+        $kategori = Kategorim::find($id);
+
+        $breadcrumb = (object)[
+            'title' => 'detail Categories',
+            'list' => ['Home', 'Categories', 'Detail']
+        ];
+
+        $page = (object)[
+            'title' => 'detail Categories'
+        ];
+        $activeMenu = 'kategori';
+        return view('category.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+    }
+
 
 }
