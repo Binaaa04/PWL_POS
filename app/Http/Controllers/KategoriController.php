@@ -92,5 +92,32 @@ class KategoriController extends Controller
         return view('category.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
     }
 
+    public function edit($id)
+        {
+            $kategori = Kategorim::find($id);
+    
+            $breadcrumb = (object)[
+                'title' => 'Categories Data ',
+                'list' => ['Home', 'Categories', 'Edit']
+            ];
+            $page = (object)[
+                'title' => 'Edit Categories Data'
+            ];
+            $activeMenu = 'kategori'; //set menu yang sedang aktif
+    
+            return view('category.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        }
 
+        public function update(Request $request, string $id)
+    {
+        $request->validate([ 
+            'kategori_kode' => 'required|string|min:3',
+            'kategori_nama' => 'required|string|max:100',
+        ]);
+        Kategorim::find($id)->update([
+            'kategori_kode' => $request->kategori_kode,
+            'kategori_nama' => $request->kategori_nama,
+        ]);
+        return redirect('/kategori')->with('success', 'Successful change data');
+    }
 }
