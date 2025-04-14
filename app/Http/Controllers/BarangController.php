@@ -91,4 +91,40 @@ use App\Models\Kategorim;
           $activeMenu = 'item';
           return view('item.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'item' => $item, 'activeMenu' => $activeMenu]);
       }
+
+      public function edit($id)
+      {
+          $item = Barangm::find($id);
+          $kategori = Kategorim::all();
+  
+          $breadcrumb = (object)[
+              'title' => 'Item ',
+              'list' => ['Home', 'Item', 'Edit']
+          ];
+          $page = (object)[
+              'title' => 'Edit Item'
+          ];
+          $activeMenu = 'item'; //set menu yang sedang aktif
+  
+          return view('item.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'item' => $item, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+      }
+
+      public function update(Request $request, string $id)
+      {
+          $request->validate([
+              'Item Code' => 'required|string|max:10',
+              'Item Name' => 'required|string|max:100',
+              'Purchase Price' => 'required|integer',
+              'Selling Price' =>'required|integer',
+              'kategori_id' => 'required|integer'
+          ]);
+          Barangm::find($id)->update([
+              'Item Code' => $request->barang_kode,
+              'Item Name' => $request->barang_nama,
+              'Purchase Price' => $request->harga_beli,
+              'Selling Price' => $request->harga_jual,
+              'kategori_id' => $request->kategori_id
+          ]);
+          return redirect('/item')->with('success', 'Successful change data');
+      }
      }
