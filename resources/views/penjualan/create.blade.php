@@ -10,12 +10,12 @@
             <form method="POST" action="{{ url('penjualan') }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">Item</label>
+                    <label class="col-1 control-label col-form-label">Transaction</label>
                     <div class="col-11">
                         <select class="form-control" id="user_id" name="user_id" required>
                             <option value="">- Select Employee -</option>
-                            @foreach($user as $item)
-                                <option value="{{ $item->user_id }}">{{ $item->user_nama }}</option>
+                            @foreach($user as $penjualan)
+                                <option value="{{ $penjualan->user_id }}">{{ $penjualan->name }}</option>
                             @endforeach
                         </select>
                         @error('user_id')
@@ -57,7 +57,7 @@
                     <label class="col-1 control-label col-form-label"></label>
                     <div class="col-11">
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                        <a class="btn btn-sm btn-default ml-1" href="{{ url('barang') }}">Back</a>
+                        <a class="btn btn-sm btn-default ml-1" href="{{ url('penjualan') }}">Back</a>
                     </div>
                 </div>
             </form>
