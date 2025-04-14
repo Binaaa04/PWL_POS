@@ -4,7 +4,10 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\PenjualanController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -67,4 +70,16 @@ Route::group(['prefix'=>'barang'], function(){
     Route::post('/ajax', [BarangController::class, 'store_ajax']); //menyimpan data barang ajax terbaru
 });
 
+Route::group(['prefix'=>'penjualan'], function(){
+    Route::get('/', [PenjualanController::class, 'index']); //menampilkan halaman awal penjualan
+    Route::post('/list', [PenjualanController::class, 'list']); //menampilkan data penjualan dalam bentuk json untuk datatables
+    Route::get('/create', [PenjualanController::class, 'create']); //menampilkan halaman form tambah penjualan
+    Route::post('/', [PenjualanController::class, 'store']); //menyimpan data penjualan terbaru
+    Route::get('/{id}', [PenjualanController::class, 'show']); //menampilkan detail penjualan
+    Route::get('/{id}/edit', [PenjualanController::class, 'edit']); //menampilkan halaman form edit penjualan
+    Route::put('/{id}', [PenjualanController::class, 'update']); //menyimpan perubahan data penjualan
+    Route::delete('/{id}', [PenjualanController::class, 'destroy']); //menghapus data penjualan
+    Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']); //menampilkan halaman form tambah penjualan ajax
+    Route::post('/ajax', [PenjualanController::class, 'store_ajax']); //menyimpan data penjualan ajax terbaru
+});
 
