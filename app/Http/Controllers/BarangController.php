@@ -24,8 +24,8 @@ use App\Models\Kategorim;
           return view('item.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'kategori'=>$kategori]);
           }
 
-          public function list(Request $request)
-          {
+        public function list(Request $request)
+         {
               $barangs = Barangm::select('barang_id', 'barang_kode', 'barang_nama', 'harga_beli','harga_jual','kategori_id')->with('kategori');
          
               return DataTables::of($barangs)
@@ -73,5 +73,22 @@ use App\Models\Kategorim;
               'kategori_id' => $request->kategori_id
           ]);
           return redirect('/barang')->with('success', 'item data succesfully changed');
+      }
+
+
+      public function show(string $id)
+      {
+          $item = Barangm::with('kategori')->find($id);
+  
+          $breadcrumb = (object)[
+              'title' => 'Detail Item',
+              'list' => ['Home', 'Item', 'Detail']
+          ];
+  
+          $page = (object)[
+              'title' => 'detail Item'
+          ];
+          $activeMenu = 'item';
+          return view('item.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'item' => $item, 'activeMenu' => $activeMenu]);
       }
      }
