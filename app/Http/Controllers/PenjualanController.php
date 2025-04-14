@@ -41,4 +41,21 @@ class PenjualanController extends Controller
       ->rawColumns(['action']) // memberitahu bahwa kolom action adalah html  
       ->make(true);
       }
+        //menampilkan detail user
+    public function show(string $id)
+    {
+        $penjualan = Penjualanm::with('user')->find($id);
+
+        $breadcrumb = (object)[
+            'title' => 'Detail Transaction',
+            'list' => ['home', 'transaction', 'detail']
+        ];
+
+        $page = (object)[
+            'title' => 'detail transaction'
+        ];
+        $activeMenu = 'penjualan';
+        return view('penjualan.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'activeMenu' => $activeMenu]);
+    }
+
 }
