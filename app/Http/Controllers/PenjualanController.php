@@ -1,6 +1,7 @@
 <?php
  namespace App\Http\Controllers;
 
+use App\Models\Barangm;
 use App\Models\Penjualanm;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -41,7 +42,8 @@ class PenjualanController extends Controller
       ->rawColumns(['action']) // memberitahu bahwa kolom action adalah html  
       ->make(true);
       }
-        //menampilkan detail user
+
+        //menampilkan detail transaction
     public function show(string $id)
     {
         $penjualan = Penjualanm::with('user')->find($id);
@@ -57,5 +59,38 @@ class PenjualanController extends Controller
         $activeMenu = 'penjualan';
         return view('penjualan.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'activeMenu' => $activeMenu]);
     }
+
+    public function create()
+    {
+        $breadcrumb = (object)[
+            'title' => 'Add New Transaction',
+            'list' => ['Home', 'Transaction', 'Add Data']
+        ];
+        $page = (object)[
+            'title' => 'Add new transaction data'
+        ];
+        $user = Userm::all(); //ambil data User untuk ditampilkan di form
+        $activeMenu = 'penjualan'; //set menu yang sedang aktif
+        return view('penjualan.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'pembeli' => 'required|string|max:10',
+            'penjualan_kode' => 'required|string|max:10',
+            'penjualan_tanggal' => 'required|date',
+            'user_id' => 'required|integer'
+        ]);
+
+        Barangm::create([
+            'pembeli' => $request->pembeli,
+            'penjualan_kode' => $request->penjualan_kode,
+            'penjualan_tanggal' => $request->penjualan_tanggal,
+            'user_id' => $request->user_id
+        ]);
+        return redirect('/penjualan')->with('success', 'transaction data succesfully changed');
+    }
+
 
 }
