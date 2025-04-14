@@ -2,7 +2,6 @@
  namespace App\Http\Controllers;
  use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Barangm;
 use App\Models\Kategorim;
 
@@ -126,5 +125,20 @@ use App\Models\Kategorim;
               'kategori_id' => $request->kategori_id
           ]);
           return redirect('/item')->with('success', 'Successful change data');
+      }
+
+      public function destroy(string $id)
+      {
+          $check = Barangm::find($id);
+          if (!$check) {
+              return redirect('/barang')->with('error', 'Data not found');
+          }
+          try {
+              Barangm::destroy($id);
+              return redirect('/barang')->with('success', 'item data successful deleted');
+          } catch (\Illuminate\Database\QueryException $e) {
+              //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+              return redirect('/item')->with('error', 'item data failed deleted because there is another table connected with this data');
+          }
       }
      }
