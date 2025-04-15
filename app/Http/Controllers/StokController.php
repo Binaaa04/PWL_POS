@@ -70,7 +70,7 @@ class StokController extends Controller
             'title' => 'Add new Stock data'
         ];
         $user = Userm::all();
-        $barang = Barangm::all(); //ambil data kategori untuk ditampilkan di form
+        $barang = Barangm::all(); //ambil data barang untuk ditampilkan di form
         $activeMenu = 'stok'; //set menu yang sedang aktif
         return view('stok.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user,'activeMenu' => $activeMenu]);
     }
@@ -90,6 +90,40 @@ class StokController extends Controller
             'barang_id' => $request->barang_id
         ]);
         return redirect('/stok')->with('success', 'Stock data succesfully added');
+    }
+    public function edit($id)
+    {
+        $stok = Stok::find($id);
+        $barang = Barangm::all();
+        $user = Userm::all();
+
+        $breadcrumb = (object)[
+            'title' => 'Stock Edit',
+            'list' => ['Home', 'Stock', 'Edit']
+        ];
+        $page = (object)[
+            'title' => 'Edit Stock Data'
+        ];
+        $activeMenu = 'stok'; //set menu yang sedang aktif
+
+        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'barang' => $barang, 'activeMenu' => $activeMenu, 'user' => $user]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'stok_tanggal' => 'required|date',
+            'stok_jumlah' => 'required|integer',
+            'user_id' =>'required|integer',
+            'barang_id' => 'required|integer'
+        ]);
+        Stok::find($id)->update([
+            'stok_tanggal' => $request->stok_tanggal,
+            'stok_jumlah' => $request->stok_jumlah,
+            'user_id' => $request->user_id,
+            'barang_id' => $request->barang_id
+        ]);
+        return redirect('/stok')->with('success', 'Successful change data');
     }
 
 }
