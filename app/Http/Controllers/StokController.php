@@ -44,4 +44,19 @@ class StokController extends Controller
                         ->make(true);
                         }
 
+    public function show(string $id)
+    {
+        $stok = Stok::with('barang', 'user')->find($id);
+
+        $breadcrumb = (object)[
+            'title' => 'Detail Stock',
+            'list' => ['Home', 'Stock', 'Detail']
+        ];
+
+        $page = (object)[
+            'title' => 'Detail Stock'
+        ];
+        $activeMenu = 'stok';
+        return view('stok.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'activeMenu' => $activeMenu]);
+    }
 }
