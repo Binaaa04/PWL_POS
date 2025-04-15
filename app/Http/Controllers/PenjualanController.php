@@ -1,7 +1,5 @@
 <?php
  namespace App\Http\Controllers;
-
-use App\Models\Barangm;
 use App\Models\Penjualanm;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -83,14 +81,60 @@ class PenjualanController extends Controller
             'user_id' => 'required|integer'
         ]);
 
-        Barangm::create([
+        Penjualanm::create([
             'pembeli' => $request->pembeli,
             'penjualan_kode' => $request->penjualan_kode,
             'penjualan_tanggal' => $request->penjualan_tanggal,
             'user_id' => $request->user_id
         ]);
-        return redirect('/penjualan')->with('success', 'transaction data succesfully changed');
+        return redirect('/penjualan')->with('success', 'transaction data succesfully added');
+    }
+    public function edit($id)
+    {
+        $penjualan = Penjualanm::find($id);
+        $user = Userm::all();
+
+        $breadcrumb = (object)[
+            'title' => 'Penjualan ',
+            'list' => ['Home', 'Penjualan', 'Edit']
+        ];
+        $page = (object)[
+            'title' => 'Edit Penjualan'
+        ];
+        $activeMenu = 'penjualan'; //set menu yang sedang aktif
+
+        return view('penjualan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'user' => $user, 'activeMenu' => $activeMenu]);
     }
 
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'pembeli' => 'required|string|max:50',
+            'penjualan_kode' => 'required|string|max:20',
+            'penjualan_tanggal' => 'required|date',
+            'user_id' => 'required|integer'
+        ]);
+        Penjualanm::find($id)->update([
+            'pembeli' => $request->pembeli,
+            'penjualan_kode' => $request->penjualan_kode,
+            'penjualan_tanggal' => $request->penjualan_tanggal,
+            'user_id' => $request->user_id
+        ]);
+        return redirect('/penjualan')->with('success', 'Successful change data');
+    }
+    public function destroy(string $id)
+    {
+        $check = Penjualanm::find($id);
+        if (!$check) {
+            return redirect('/penjualan')->with('error', 'Data not found');
+        }
+        try {
+            penjualanm::destroy($id);
+            return redirect('/penjualan')->with('success', 'transaction data successful deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+            return redirect('/penjualan')->with('error', 'transaction data failed deleted because there is another table connected with this data');
+        }
+    }
 
 }
