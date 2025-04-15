@@ -95,7 +95,7 @@ class PenjualanController extends Controller
         $user = Userm::all();
 
         $breadcrumb = (object)[
-            'title' => 'Penjualan ',
+            'title' => 'Edit Penjualan ',
             'list' => ['Home', 'Penjualan', 'Edit']
         ];
         $page = (object)[
@@ -109,7 +109,7 @@ class PenjualanController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'pembeli' => 'required|string|max:50',
+            'pembeli' => 'required|string|min:10|unique:t_penjualan,pembeli,' . $id . ',penjualan_id',
             'penjualan_kode' => 'required|string|max:20',
             'penjualan_tanggal' => 'required|date',
             'user_id' => 'required|integer'
