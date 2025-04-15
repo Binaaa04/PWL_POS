@@ -126,4 +126,18 @@ class StokController extends Controller
         return redirect('/stok')->with('success', 'Successful change data');
     }
 
+    public function destroy(string $id)
+    {
+        $check = Stok::find($id);
+        if (!$check) {
+            return redirect('/stok')->with('error', 'Data not found');
+        }
+        try {
+            Stok::destroy($id);
+            return redirect('/stok')->with('success', 'user data successful deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+            return redirect('/stok')->with('error', 'user data failed deleted because there is another table connected with this data');
+        }
+    }
 }
