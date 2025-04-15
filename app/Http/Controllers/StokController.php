@@ -59,4 +59,37 @@ class StokController extends Controller
         $activeMenu = 'stok';
         return view('stok.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'activeMenu' => $activeMenu]);
     }
+
+    public function create()
+    {
+        $breadcrumb = (object)[
+            'title' => 'Add New Stock',
+            'list' => ['Home', 'Stock', 'Add Data']
+        ];
+        $page = (object)[
+            'title' => 'Add new Stock data'
+        ];
+        $user = Userm::all();
+        $barang = Barangm::all(); //ambil data kategori untuk ditampilkan di form
+        $activeMenu = 'stok'; //set menu yang sedang aktif
+        return view('stok.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user,'activeMenu' => $activeMenu]);
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'stok_tanggal' => 'required|string|min:3',
+            'stok_jumlah' => 'required|string|max:100',
+            'user_id' => 'required|integer',
+            'barang_id' => 'required|integer'
+        ]);
+
+        Stok::create([
+            'stok_tanggal' => $request->stok_tanggal,
+            'stok_jumlah' => $request->stok_jumlah,
+            'user_id' => $request->user_id,
+            'barang_id' => $request->barang_id
+        ]);
+        return redirect('/stok')->with('success', 'Stock data succesfully added');
+    }
+
 }
