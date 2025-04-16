@@ -60,4 +60,36 @@ class DetailController extends Controller
         return view('detail.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu]);
     }
 
+    public function create()
+    {
+        $breadcrumb = (object)[
+            'title' => 'Add New Detail Transaction',
+            'list' => ['Home', 'Detail Transaction', 'Add Data']
+        ];
+        $page = (object)[
+            'title' => 'Add new Detail Transaction data'
+        ];
+        $penjualan = Penjualanm::all();
+        $barang = Barangm::all(); //ambil data barang untuk ditampilkan di form
+        $activeMenu = 'detail'; //set menu yang sedang aktif
+        return view('detail.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'penjualan' => $penjualan,'activeMenu' => $activeMenu]);
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'harga' => 'required|integer',
+            'jumlah' => 'required|integer',
+            'barang_id' => 'required|integer',
+            'penjualan_id' => 'required|integer'
+        ]);
+
+        Detailm::create([
+            'harga' => $request->harga,
+            'jumlah' => $request->jumlah,
+            'barang_id' => $request->barang_id,
+            'penjualan_id' => $request->penjualan_id
+        ]);
+        return redirect('/detail')->with('success', 'Detail Transaction data succesfully added');
+    }
+
 }
