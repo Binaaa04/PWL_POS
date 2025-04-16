@@ -92,4 +92,54 @@ class DetailController extends Controller
         return redirect('/detail')->with('success', 'Detail Transaction data succesfully added');
     }
 
+    public function edit($id)
+    {
+        $detail = Detailm::find($id);
+        $barang = Barangm::all();
+        $penjualan = Penjualanm::all();
+
+        $breadcrumb = (object)[
+            'title' => 'Detail Transaction Edit',
+            'list' => ['Home', 'Detail Transaction', 'Edit']
+        ];
+        $page = (object)[
+            'title' => 'Edit Detail Transaction Data'
+        ];
+        $activeMenu = 'detail'; //set menu yang sedang aktif
+
+        return view('detail.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'barang' => $barang, 'activeMenu' => $activeMenu, 'penjualan' => $penjualan]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'harga' => 'required|integer',
+            'jumlah' => 'required|integer',
+            'barang_id' => 'required|integer',
+            'penjualan_id' => 'required|integer'
+        ]);
+        Detailm::find($id)->update([
+            'harga' => $request->harga,
+            'jumlah' => $request->jumlah,
+            'barang_id' => $request->barang_id,
+            'penjualan_id' => $request->penjualan_id
+        ]);
+        return redirect('/detail')->with('success', 'Successful change data');
+    }
+
+    public function destroy(string $id)
+    {
+        $check = Detailm::find($id);
+        if (!$check) {
+            return redirect('/detail')->with('error', 'Data not found');
+        }
+        try {
+            Detailm::destroy($id);
+            return redirect('/detail')->with('success', 'user data successful deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
+            return redirect('/detail')->with('error', 'user data failed deleted because there is another table connected with this data');
+        }
+    }
+
 }
