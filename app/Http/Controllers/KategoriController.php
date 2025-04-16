@@ -74,7 +74,7 @@ class KategoriController extends Controller
             'kategori_kode' => $request->kategori_kode,
             'kategori_nama' => $request->kategori_nama,
         ]);
-        return redirect('/kategori')->with('success', 'Category data succesfully changed');
+        return redirect('/kategori')->with('success', 'Category data succesfully added');
     }
     public function show(string $id)
     {

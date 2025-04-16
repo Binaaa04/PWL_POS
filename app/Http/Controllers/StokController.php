@@ -17,7 +17,7 @@ class StokController extends Controller
         $page = (object)[
             'title' => 'Stock list integreted in system'
         ];
-        $activeMenu = 'stok '; //set menu yang sedang aktif
+        $activeMenu = 'stok'; //set menu yang sedang aktif
 
         $barang = Barangm::all(); //ambil data barang utk filter barang
         $user = Userm::all();

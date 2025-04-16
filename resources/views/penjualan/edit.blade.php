@@ -27,7 +27,7 @@
                             <option value="">- Select Employee -</option>
                             @foreach($user as $item)
                                 <option value="{{ $item->user_id }}" 
-                                    @if($item->user_id == $item->user_id) selected @endif>
+                                    @if($item->user_id == $penjualan->user_id) selected @endif>
                                     {{ $item->name }}
                                 </option>
                             @endforeach

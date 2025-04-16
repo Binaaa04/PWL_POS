@@ -13,7 +13,7 @@
                 <h5><i class="icon fas fa-ban"></i> Error!</h5>
                 The data you are looking for is not found.
             </div>
-            <a href="{{ url('stok') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+            <a href="{{ url('stok') }}" class="btn btn-sm btn-default mt-2">Back</a>
         @else
             <form method="POST" action="{{ url('/stok/'.$stok->stok_id) }}" class="form-horizontal">
                 @csrf
@@ -26,7 +26,7 @@
                         <select class="form-control" id="barang_id" name="barang_id" required>
                             <option value="">- Select Item -</option>
                             @foreach($barang as $item)
-                                <option value="{{ $item->barang_id }}" @if($item->barang_id == $item->barang_id) selected @endif>
+                                <option value="{{ $item->barang_id }}" @if($item->barang_id == $stok->barang_id) selected @endif>
                                     {{ $item->barang_nama }}
                                 </option>
                             @endforeach
@@ -44,7 +44,7 @@
                         <select class="form-control" id="user_id" name="user_id" required>
                             <option value="">- Select Employee -</option>
                             @foreach($user as $item)
-                                <option value="{{ $item->user_id }}" @if($item->user_id == $item->user_id) selected @endif>
+                                <option value="{{ $item->user_id }}" @if($item->user_id == $stok->user_id) selected @endif>
                                     {{ $item->name }}
                                 </option>
                             @endforeach
