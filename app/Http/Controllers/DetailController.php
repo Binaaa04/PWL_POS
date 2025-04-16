@@ -44,5 +44,20 @@ class DetailController extends Controller
                         ->rawColumns(['action']) // memberitahu bahwa kolom action adalah html  
                         ->make(true);
                         }
+    public function show(string $id)
+    {
+        $detail = Detailm::with('barang', 'penjualan')->find($id);
+
+        $breadcrumb = (object)[
+            'title' => 'Detail Transaction',
+            'list' => ['Home', 'Detail Transaction', 'Detail']
+        ];
+
+        $page = (object)[
+            'title' => 'Detail Transaction'
+        ];
+        $activeMenu = 'detail';
+        return view('detail.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu]);
+    }
 
 }
