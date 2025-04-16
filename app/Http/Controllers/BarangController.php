@@ -71,7 +71,7 @@ use App\Models\Kategorim;
               'harga_jual' => $request->harga_jual,
               'kategori_id' => $request->kategori_id
           ]);
-          return redirect('/barang')->with('success', 'item data succesfully changed');
+          return redirect('/barang')->with('success', 'item data succesfully added');
       }
 
 
@@ -93,7 +93,7 @@ use App\Models\Kategorim;
 
       public function edit($id)
       {
-          $item = Barangm::find($id);
+          $barang = Barangm::find($id);
           $kategori = Kategorim::all();
   
           $breadcrumb = (object)[
@@ -103,28 +103,28 @@ use App\Models\Kategorim;
           $page = (object)[
               'title' => 'Edit Item'
           ];
-          $activeMenu = 'item'; //set menu yang sedang aktif
+          $activeMenu = 'barang'; //set menu yang sedang aktif
   
-          return view('item.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'item' => $item, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+          return view('item.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
       }
 
       public function update(Request $request, string $id)
       {
           $request->validate([
-              'Item Code' => 'required|string|max:10',
-              'Item Name' => 'required|string|max:100',
-              'Purchase Price' => 'required|integer',
-              'Selling Price' =>'required|integer',
+              'barang_kode' => 'required|string|max:10',
+              'barang_nama' => 'required|string|max:100',
+              'harga_beli' => 'required|integer',
+              'harga_jual' =>'required|integer',
               'kategori_id' => 'required|integer'
           ]);
           Barangm::find($id)->update([
-              'Item Code' => $request->barang_kode,
-              'Item Name' => $request->barang_nama,
-              'Purchase Price' => $request->harga_beli,
-              'Selling Price' => $request->harga_jual,
+              'barang_kode' => $request->barang_kode,
+              'barang_nama' => $request->barang_nama,
+              'harga_beli' => $request->harga_beli,
+              'harga_jual' => $request->harga_jual,
               'kategori_id' => $request->kategori_id
           ]);
-          return redirect('/item')->with('success', 'Successful change data');
+          return redirect('/barang')->with('success', 'Successful change data');
       }
 
       public function destroy(string $id)
@@ -138,7 +138,7 @@ use App\Models\Kategorim;
               return redirect('/barang')->with('success', 'item data successful deleted');
           } catch (\Illuminate\Database\QueryException $e) {
               //jika terjadi error ketika menghapus data, redirect kembali ke halaman dgn membaa pesan error
-              return redirect('/item')->with('error', 'item data failed deleted because there is another table connected with this data');
+              return redirect('/barang')->with('error', 'item data failed deleted because there is another table connected with this data');
           }
       }
      }
