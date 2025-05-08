@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
@@ -8,11 +9,15 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PenjualanController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
+Route::pattern('id','[0-9+]');
+Route::get('/login',[AuthController::class,'login'])->name('login');
+Route::post('login',[AuthController::class,'postlogin']);
 Route::get('/', [WelcomeController::class,'index']);
+Route::get('logout',[AuthController::class,'logout'])->middleware('auth');
 
+Route::middleware(['auth'])->group(function(){
 Route::group(['prefix'=>'user'], function(){
     Route::get('/', [UserController::class, 'index']); //menampilkan halaman awal user
     Route::post('/list', [UserController::class, 'list']); //menampilkan data user dalam bentuk json untuk datatables
@@ -121,4 +126,5 @@ Route::group(['prefix'=>'detail'], function(){
     Route::delete('/{id}', [DetailController::class, 'destroy']); //menghapus data penjualan
     Route::get('/create_ajax', [DetailController::class, 'create_ajax']); //menampilkan halaman form tambah penjualan ajax
     Route::post('/ajax', [DetailController::class, 'store_ajax']); //menyimpan data penjualan ajax terbaru
+});
 });
