@@ -34,7 +34,7 @@ Route::group(['prefix'=>'user'], function(){
     Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); //menampilkan halaman form confirm delete user AJAX
     Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); //menghapus data user AJAX
 });
-
+Route::middleware(['authorize:Admin'])->group(function(){
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
@@ -51,6 +51,7 @@ Route::group(['prefix' => 'level'], function () {
     Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']);
     Route::get('/{id}/show_ajax', [LevelController::class, 'show_ajax']);
     Route::delete('/{id}', [LevelController::class, 'destroy']);
+});
 });
 
 Route::group(['prefix' => 'kategori'], function () {
