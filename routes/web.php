@@ -72,6 +72,7 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::delete('/{id}', [KategoriController::class, 'destroy']);
 });
 
+Route::middleware(['authorize:MNG, Admin'])->group(function(){
 Route::group(['prefix' => 'barang'], function () {
     Route::get('/', [BarangController::class, 'index']);
     Route::post('/list', [BarangController::class, 'list']);
@@ -89,6 +90,8 @@ Route::group(['prefix' => 'barang'], function () {
     Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']);
     Route::delete('/{id}', [BarangController::class, 'destroy']);
 });
+});
+
 
 Route::group(['prefix'=>'penjualan'], function(){
     Route::get('/', [PenjualanController::class, 'index']); //menampilkan halaman awal penjualan
