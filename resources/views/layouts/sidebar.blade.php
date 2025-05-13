@@ -32,7 +32,7 @@
     <li class="nav-item">
       <a href="{{ url('/user') }}" class="nav-link {{ ($activeMenu == 'user') ? 'active' : '' }}">
         <i class="nav-icon far fa-user"></i>
-        <p>Data User</p>
+        <p>User Data</p>
       </a>
     </li>
 
@@ -40,20 +40,20 @@
     <li class="nav-item">
       <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 'kategori') ? 'active' : '' }}">
         <i class="nav-icon far fa-bookmark"></i>
-        <p>Goods Category</p>
+        <p>Item Category</p>
       </a>
     </li>
     <li class="nav-item">
       <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 'barang') ? 'active' : '' }}">
         <i class="nav-icon far fa-list-alt"></i>
-        <p>Goods Data</p>
+        <p>Item Data</p>
       </a>
     </li>
     <li class="nav-header">Transaction Data</li>
     <li class="nav-item">
       <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok') ? 'active' : '' }}">
         <i class="nav-icon fa-cubes"></i>
-        <p>Stock of Goods</p>
+        <p>Stock of Item</p>
       </a>
     </li>
     <li class="nav-item">
@@ -61,6 +61,20 @@
         <i class="nav-icon fas fa-cash-register"></i>
         <p>Sales Transactions</p>
       </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{ url('/detail') }}" class="nav-link {{ ($activeMenu == 'detail') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-shopping-cart"></i>
+        <p>Detail Sales Transactions</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="nav-link btn btn-link {{ ($activeMenu == 'logout') ? 'active' : '' }}" style="padding: 0; margin: 0;">
+          <p>Logout</p>
+        </button>
+      </form>
     </li>
   </ul>
 </nav>

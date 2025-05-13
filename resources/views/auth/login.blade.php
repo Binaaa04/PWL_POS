@@ -58,6 +58,12 @@
                         </div>
                     </div>
                 </form>
+                    <div class="social-auth-links text-center mt-2 mb-3">
+                        <p class="mb-0">
+                            <a href="{{ route('registration') }}" class="text-center">Register a new membership</a>
+                        </p>
+                    </div>
+
             </div>
             <!-- /.card-body -->
         </div>

@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function login()
     {
-        if(Auth::check()){ // jika sudah login, maka redirect ke halaman home
+        if (Auth::check()) {
             return redirect('/');
         }
         return view('auth.login');
@@ -37,14 +37,40 @@ class AuthController extends Controller
             ]);
         }
     
-        return redirect('login')->withErrors(['login' => 'Username atau password salah.']);
+        return redirect(to: 'login')->withErrors(['login' => 'Username atau password salah.']);
     }
-    
-    
+
+public function postregister(Request $request)
+{
+    $validatedData = $request->validate([
+        'username' => 'required|string|max:255|unique:m_user',
+        'name' => 'required|string|max:255',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    // Ambil level_id dari level_name = 'Customer'
+    $level = \App\Models\Levelm::where('level_name', 'Customer')->first();
+
+    if (!$level) {
+        return back()->withErrors(['role' => 'Level Customer tidak ditemukan.']);
+    }
+
+    $user = \App\Models\Userm::create([
+        'level_id' => $level->level_id,
+        'username' => $validatedData['username'],
+        'name' => $validatedData['name'],
+        'password' => bcrypt($validatedData['password']),
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/');
+}
+
+
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('login');
