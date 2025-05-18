@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\api\LoginController;
+use App\Http\Controllers\api\LogoutController;
 use App\Http\Controllers\api\RegisterController;
 
 /*
@@ -20,6 +22,18 @@ Route::post('/register', RegisterController::class)->name('register');
 
 Route::post('/login', LoginController::class)->name('login');
 
- Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::prefix('user')
+    ->controller(UserController::class)
+    ->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{user}', 'show');
+    Route::put('/{user}', 'update');
+    Route::delete('/{user}', 'destroy');
 });
+
+Route::post('/logout', LogoutController::class)->name('login');
