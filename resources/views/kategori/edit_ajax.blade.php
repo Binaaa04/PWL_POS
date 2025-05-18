@@ -34,7 +34,7 @@
                         <small id="error-kategori_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Category Name/label>
+                        <label>Category Name</label>
                         <input value="{{ $kategori->kategori_nama }}" type="text" name="kategori_nama" id="kategori_nama" class="form-control" required>
                         <small id="error-kategori_nama" class="error-text form-text text-danger"></small>
                     </div>

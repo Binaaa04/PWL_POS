@@ -14,12 +14,12 @@ class UserController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Daftar User',
+            'title' => 'User List',
             'list' => ['Home', 'User']
         ];
 
         $page = (object) [
-            'title' => 'Daftar User yang terdaftar di sistem'
+            'title' => 'User list integreted in system'
         ];
 
         $activeMenu = 'user';
@@ -32,16 +32,16 @@ class UserController extends Controller
     // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $user = Userm::select('user_id', 'username', 'name', 'level_id')->with('level');
+        $users = Userm::select('user_id', 'username', 'name', 'level_id')->with('level');
 
         if ($request->level_id) {
-            $user->where('level_id', $request->level_id);
+            $users->where('level_id', $request->level_id);
         }
 
-        return DataTables::of($user)
+        return DataTables::of($users)
             // menambahkan kolom index / no urut (default name kolom: DT_RowIndex)
             ->addIndexColumn()
-            ->addColumn('action', function ($user) { // menambahkan kolom aksi
+            ->addColumn('action', function ($user) { // menambahkan kolom action
                 // $btn = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-
                 // sm">Detail</a> ';
                 // $btn .= '<a href="' . url('/user/' . $user->user_id . '/edit') . '" class="btn btn-
@@ -82,7 +82,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_user',
+            'username' => 'required|string|min:3| unique:m_users, username',
             'name' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer'
@@ -96,7 +96,7 @@ class UserController extends Controller
         return redirect('/user')->with('success', 'Data user berhasil disimpan');
     }
 
-    public function show(String $id)
+    public function show(string $id)
     {
         $user = Userm::with('level')->find($id);
         $breadcrumb = (object) [
@@ -110,7 +110,7 @@ class UserController extends Controller
         return view('user.show', compact('breadcrumb', 'page', 'user', 'activeMenu'));
     }
 
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $user = Userm::find($id);
         $level = Levelm::all();
@@ -132,7 +132,7 @@ class UserController extends Controller
         $request->validate([
 
 
-            'username' => 'required|string |min: 3 unique:m_m_user, username, ' . $id . ', user_id',
+            'username' => 'required|string |min: 3 unique:m_users, username, ' . $id . ', user_id',
             'name' => 'required string | max: 100',
             'password' => 'nullable |min:5',
             'level_id' => 'required|integer'
@@ -176,7 +176,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_id' => 'required|integer',
-                'username' => 'required|string|min:3|unique:m_user,username',
+                'username' => 'required|string|min:3|unique:m_users,username',
                 'name' => 'required|string|max:100',
                 'password' => 'required|min:6'
             ];
@@ -202,7 +202,7 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function show_ajax(String $id)
+    public function show_ajax(string $id)
     {
         $user = Userm::find($id);
         $level = Levelm::select('level_id', 'level_nama')->get();
@@ -210,12 +210,12 @@ class UserController extends Controller
         return view('user.show_ajax', compact('user', 'level'));
     }
 
-    public function edit_ajax(String $id)
+    public function edit_ajax(string $id)
     {
         $user = Userm::find($id);
         $level = Levelm::select('level_id', 'level_nama')->get();
 
-        return view('user.edit_ajax',['user' => $user, 'level' => $level]);
+        return view('user.edit_ajax', ['user' => $user, 'level' => $level]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -223,7 +223,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_id' => 'required|integer',
-                'username' => 'required|max:20|unique:m_m_user,username,' . $id . ',user_id',
+                'username' => 'required|max:20|unique:m_users,username,' . $id . ',user_id',
                 'name' => 'required|max:100',
                 'password' => 'nullable|min:6|max:20'
             ];
@@ -255,11 +255,11 @@ class UserController extends Controller
         }
         return redirect('/');
     }
-    public function confirm_ajax(String $id)
+    public function confirm_ajax(string $id)
     {
         $user = Userm::find($id);
 
-        return view('user.confirm_ajax', ['user'=> $user]);
+        return view('user.confirm_ajax', ['user' => $user]);
     }
 
     public function delete_ajax(Request $request, $id)
@@ -268,10 +268,10 @@ class UserController extends Controller
             $user = Userm::find($id);
             if ($user) {
                 try {
-                Userm::destroy($id);
-                return response()->json([
-                'status'  => true,
-                'message' => 'item data succesfully deleted'
+                    $user->delete();
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data berhasil dihapus'
                     ]);
                 } catch (\Illuminate\Database\QueryException $e) {
                     return response()->json([
@@ -286,6 +286,54 @@ class UserController extends Controller
                 ]);
             }
         }
-        return redirect('/');
+        return redirect('/user');
+    }
+    public function profile()
+    {
+        $user = auth()->user();
+        $breadcrumb = (object) [
+            'title' => 'Profile',
+            'list' => ['Home', 'Profile']
+        ];
+
+        $page = (object) [
+            'title' => 'User Profile'
+        ];
+
+        $activeMenu = 'profile';
+        return view('profile', compact('breadcrumb', 'page', 'user', 'activeMenu'));
+    }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $authUser = auth()->user();
+        $user = Userm::find($authUser->user_id);
+
+        if ($user->image && file_exists(public_path($user->image))) {
+            unlink(public_path($user->image));
+        }
+
+        $file = $request->file('image');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'uploads/profile/';
+
+        if (!file_exists(public_path($filePath))) {
+            mkdir(public_path($filePath), 0777, true);
+        }
+
+        $file->move(public_path($filePath), $fileName);
+
+        $user->image = $filePath . $fileName;
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile picture updated successfully',
+            'image_url' => $user->getProfilePictureUrl()
+        ]);
     }
 }

@@ -39,6 +39,10 @@ return [
             'driver' => 'session',
             'provider' => 'm_user',
         ],
+        'api'=>[
+            'driver'=>'jwt',
+            'provider'=>'m_user'
+        ],
     ],
 
     /*

@@ -5,13 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Userm extends Authenticatable
+class Userm extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+        public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
     protected $table = 'm_user'; // Sesuaikan dengan nama tabel di database
     protected $primaryKey = 'user_id'; // Primary key tabel
-    protected $fillable = ['username', 'password', 'name', 'level_id', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'name', 'level_id','image','created_at', 'updated_at'];
     protected $hidden = ['password'];
     protected $casts = ['password'=>'hashed'];
     //public $timestamps = true; 
@@ -36,5 +44,11 @@ class Userm extends Authenticatable
 
         public function getRole():string{
         return $this->level->level_kode;
+    }
+        public function getProfilePictureUrl()
+    {
+        return $this->image
+            ? asset($this->image)
+            : asset('adminlte/dist/img/user2-160x160.jpg');
     }
 }

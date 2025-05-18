@@ -34,7 +34,7 @@
         <table class="table table-bordered table-striped table-hover table-sm" 
 id="table_level"> 
           <thead> 
-            <tr><th>ID</th><th>Level_Code</th><th>Level_Name</th><th>Action</th></tr> 
+            <tr><th>ID</th><th>Level Code</th><th>Level Name</th><th>Action</th></tr> 
           </thead> 
       </table> 
     </div> 
