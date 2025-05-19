@@ -3,6 +3,7 @@
 use Monolog\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\ItemController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\LevelController;
 use App\Http\Controllers\api\LoginController;
@@ -40,8 +41,18 @@ Route::prefix('level')
     Route::get('/', 'index');
     Route::post('/', 'store');
     Route::get('/{level}', 'show');
-    Route::put('/{level}', 'update');
-    Route::delete('/{level}', 'destroy');
+    Route::put('/{level_id}', 'update');
+    Route::delete('/{level_kode}', 'destroy');
+});
+
+Route::prefix('barang')
+    ->controller(ItemController::class)
+    ->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{level}', 'show');
+    Route::put('/{level_id}', 'update');
+    Route::delete('/{level_kode}', 'destroy');
 });
 
 Route::post('/logout', LogoutController::class)->name('login');
