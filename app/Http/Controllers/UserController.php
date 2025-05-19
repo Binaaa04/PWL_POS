@@ -82,7 +82,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|min:3| unique:m_users, username',
+            'username' => 'required|string|min:3| unique:m_user, username',
             'name' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer'
@@ -132,7 +132,7 @@ class UserController extends Controller
         $request->validate([
 
 
-            'username' => 'required|string |min: 3 unique:m_users, username, ' . $id . ', user_id',
+            'username' => 'required|string |min: 3 unique:m_user, username, ' . $id . ', user_id',
             'name' => 'required string | max: 100',
             'password' => 'nullable |min:5',
             'level_id' => 'required|integer'
@@ -176,7 +176,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_id' => 'required|integer',
-                'username' => 'required|string|min:3|unique:m_users,username',
+                'username' => 'required|string|min:3|unique:m_user,username',
                 'name' => 'required|string|max:100',
                 'password' => 'required|min:6'
             ];
@@ -223,7 +223,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_id' => 'required|integer',
-                'username' => 'required|max:20|unique:m_users,username,' . $id . ',user_id',
+                'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
                 'name' => 'required|max:100',
                 'password' => 'nullable|min:6|max:20'
             ];

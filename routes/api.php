@@ -3,7 +3,7 @@
 use Monolog\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\LevelController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\LogoutController;
@@ -28,24 +28,20 @@ Route::post('/login', LoginController::class)->name('login');
 //     return $request->user();
 // });
 
-Route::prefix('user')
-    ->controller(UserController::class)
-    ->group(function () {
-    Route::get('/', 'index');
-    Route::post('/', 'store');
-    Route::get('/{user}', 'show');
-    Route::put('/{user}', 'update');
-    Route::delete('/{user}', 'destroy');
-});
+Route::get('/user', [UserController::class, 'index']);
+Route::post('/user', [UserController::class, 'store']);
+Route::get('/user/{user}', [UserController::class, 'show']);
+Route::put('/user/{user_id}', [UserController::class, 'update']);
+Route::delete('/user/{user_id}', [UserController::class, 'destroy']);
 
 Route::prefix('level')
     ->controller(LevelController::class)
     ->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
-    Route::get('/{user}', 'show');
-    Route::put('/{user}', 'update');
-    Route::delete('/{user}', 'destroy');
+    Route::get('/{level}', 'show');
+    Route::put('/{level}', 'update');
+    Route::delete('/{level}', 'destroy');
 });
 
 Route::post('/logout', LogoutController::class)->name('login');
