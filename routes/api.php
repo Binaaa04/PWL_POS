@@ -22,7 +22,8 @@ use App\Http\Controllers\api\RegisterController;
 |
 */
 
-Route::post('/register', RegisterController::class)->name('register');
+Route::get('/register1', RegisterController::class)->name('register1');
+Route::post('/register1', RegisterController::class)->name('register1');
 
 Route::post('/login', LoginController::class)->name('login');
 
