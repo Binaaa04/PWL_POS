@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\CategoryController;
 use Monolog\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,9 +51,20 @@ Route::prefix('barang')
     ->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
-    Route::get('/{level}', 'show');
-    Route::put('/{level_id}', 'update');
-    Route::delete('/{level_kode}', 'destroy');
+    Route::get('/{barang}', 'show');
+    Route::put('/{barang_id}', 'update');
+    Route::delete('/{barang_kode}', 'destroy');
 });
+
+Route::prefix('kategori')
+    ->controller(CategoryController::class)
+    ->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{barang}', 'show');
+    Route::put('/{barang_id}', 'update');
+    Route::delete('/{barang_kode}', 'destroy');
+});
+
 
 Route::post('/logout', LogoutController::class)->name('login');
