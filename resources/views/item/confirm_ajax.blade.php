@@ -92,7 +92,7 @@
 
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Berhasil',
+                                title: 'success',
                                 text: response.message
                             });
 

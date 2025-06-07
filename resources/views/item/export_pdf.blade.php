@@ -58,7 +58,8 @@
 <body> 
     <table class="border-bottom-header"> 
         <tr> 
-            <td width="15%" class="text-center"><img src="{{ asset('polinema-bw.png') }}" style="width: 200px; height: auto;"></td> 
+            <td width="15%" class="text-center"><img src="{{ public_path('polinema-bw.png') }}" style="width: 200px; height: auto;">
+            </td> 
             <td width="85%"> 
                 <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN 
 PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span> 
@@ -78,11 +79,11 @@ MALANG</span>
         <thead> 
             <tr> 
                 <th class="text-center">No</th> 
-                <th>Kode Barang</th> 
-                <th>Nama Barang</th> 
-                <th class="text-right">Harga Beli</th> 
-                <th class="text-right">Harga Jual</th> 
-                <th>Kategori</th> 
+                <th>Item Code</th> 
+                <th>Item Name</th> 
+                <th class="text-right">Purchase Price</th> 
+                <th class="text-right">Selling Price</th> 
+                <th>Category</th> 
             </tr> 
         </thead> 
         <tbody> 

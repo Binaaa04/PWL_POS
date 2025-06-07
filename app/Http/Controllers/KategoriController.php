@@ -185,7 +185,7 @@ class KategoriController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'status'   => false,    // respon json, true: berhasil, false: gagal 
-                    'message'  => 'failed validation.',
+                    'message'  => 'failed validation',
                     'msgField' => $validator->errors()  // menunjukkan field mana yang error 
                 ]);
             }
@@ -197,7 +197,7 @@ class KategoriController extends Controller
                 $check->update($request->all());
                 return response()->json([
                     'status'  => true,
-                    'message' => 'Data succesful changed'
+                    'message' => 'Data successful changed'
                 ]);
             } else {
                 return response()->json([

@@ -28,8 +28,8 @@
                                 <th>ID</th>
                                 <th>Username</th>
                                 <th>Name</th>
-                                <th>Level User</th>
-                                <th>action</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                     </table>

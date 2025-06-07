@@ -15,8 +15,8 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px solid white;width: 100%;">
       <div class="image">
         <img
-          src="{{ auth()->check() ? auth()->user()->getProfilePictureUrl() : asset('adminlte/dist/img/user2-160x160.jpg') }}"
-          class="img-circle elevation-2" alt="User Image">
+          src="{{ auth()->check() ? auth()->user()->getProfilePictureUrl() : asset('adminlte/dist/img/user2-160x160.jpg') }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+           alt="User Image">
       </div>
       <div class="info">
         <a href="{{ url('/profile') }}" class="d-block">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</a>

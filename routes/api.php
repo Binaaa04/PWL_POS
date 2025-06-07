@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\api\CategoryController;
-use Monolog\Level;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ItemController;
 use App\Http\Controllers\api\UserController;

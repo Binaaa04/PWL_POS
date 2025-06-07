@@ -17,7 +17,7 @@ class LogoutController extends Controller
         if ($removeToken) {
             return response()->json([
                 'success' => true,
-                'message' => 'Logout Berhasil',
+                'message' => 'Logout successfully',
             ], 200);
         }
     }

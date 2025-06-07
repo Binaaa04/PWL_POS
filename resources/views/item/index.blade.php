@@ -3,14 +3,15 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar barang</h3>
+            <h3 class="card-title">Item List</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
-                <a href="{{ url('/barang/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Barang</a>
+                <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Item</button>
+                <button onclick="modalAction('{{ url('/barang/import_ajax') }}')" class="btn btn-info">Import Item Ajax</button>
+                <a href="{{ url(path: '/barang/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Item</a>
                 <a href="{{ url('/barang/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file
-                pdf"></i> Export Barang</a> 
+                pdf"></i> Export Item</a> 
                 <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn 
-    btn-success">Tambah Data (Ajax)</button>
+    btn-success">Add Data Ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -22,12 +23,12 @@
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
                             <div class="col-md-3">
                                 <select name="filter_kategori" class="form-control form-control-sm filter_kategori">
-                                    <option value="">- Semua -</option>
+                                    <option value="">- all -</option>
                                     @foreach($kategori as $l)
                                         <option value="{{ $l->kategori_id }}">{{ $l->kategori_nama }}</option>
                                     @endforeach
                                 </select>
-                                <small class="form-text text-muted">Kategori Barang</small>
+                                <small class="form-text text-muted">Item Category</small>
                             </div>
                         </div>
                     </div>
@@ -43,12 +44,11 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode Barang</th>
-                        <th>Nama Barang</th>
-                        <th>Harga
-                            Beli</th>
-                        <th>Harga Jual</th>
-                        <th>Kategori</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Purchase Price</th>
+                        <th>Selling Price</th>
+                        <th>Category</th>
                         <th>action</th>
                     </tr>
                 </thead>

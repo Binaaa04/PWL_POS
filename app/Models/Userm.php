@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Userm extends Authenticatable implements JWTSubject
@@ -18,7 +16,7 @@ class Userm extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    protected $table = 'm_user'; // Sesuaikan dengan nama tabel di database
+    protected $table = 'm_user'; 
     protected $primaryKey = 'user_id'; // Primary key tabel
     protected $fillable = ['username', 'password', 'name', 'level_id','image','created_at', 'updated_at'];
     protected $hidden = ['password'];
@@ -49,12 +47,7 @@ class Userm extends Authenticatable implements JWTSubject
         public function getProfilePictureUrl()
     {
         return $this->image
-            ? asset($this->image)
+            ? $this->image
             : asset('adminlte/dist/img/user2-160x160.jpg');
-    }
-    protected function image():Attribute{
-        return Attribute::make(
-            get: fn($image)=>url('/storage/posts/'.$image),
-        );
     }
 }

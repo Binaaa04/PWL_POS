@@ -82,7 +82,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|min:3| unique:m_user, username',
+            'username' => 'required|string|min:3| unique:m_user,username',
             'name' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer'
@@ -93,7 +93,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'level_id' => $request->level_id
         ]);
-        return redirect('/user')->with('success', 'Data user berhasil disimpan');
+        return redirect('/user')->with('success', 'Data user data saved successfully disimpan');
     }
 
     public function show(string $id)
@@ -144,7 +144,7 @@ class UserController extends Controller
             'password' => $request->password ? bcrypt($request->password) : Userm::find($id)->password,
             'level_id' => $request->level_id
         ]);
-        return redirect('/user')->with('success', 'Data user berhasil diubah');
+        return redirect('/user')->with('success', 'Data user data user successfully updated diubah');
     }
 
     // Menghapus data user
@@ -158,7 +158,7 @@ class UserController extends Controller
         try {
             Userm::destroy($id);
             // Hapus data level
-            return redirect('/user')->with('success', 'Data user berhasil dihapus');
+            return redirect('/user')->with('success', 'Data user data user successfully deleted dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
@@ -184,7 +184,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Validasi Gagal',
+                    'message' => 'Failed Validation',
                     'msgField' => $validator->errors(),
                 ]);
             }
@@ -196,7 +196,7 @@ class UserController extends Controller
             ]);
             return response()->json([
                 'status' => true,
-                'message' => 'Data user berhasil disimpan'
+                'message' => 'data saved successfully'
             ]);
         }
         return redirect('/');
@@ -232,7 +232,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false, // respon json, true: berhasil, false: gagal
-                    'message' => 'Validasi gagal.',
+                    'message' => 'Failed Validation',
                     'msgField' => $validator->errors() // menunjukkan field mana yang error
                 ]);
             }
@@ -244,12 +244,12 @@ class UserController extends Controller
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data berhasil diupdate'
+                    'message' => 'data updated successfully'
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => 'Data not found'
                 ]);
             }
         }
@@ -271,18 +271,18 @@ class UserController extends Controller
                     $user->delete();
                     return response()->json([
                         'status' => true,
-                        'message' => 'Data berhasil dihapus'
+                        'message' => 'data deleted successfully'
                     ]);
                 } catch (\Illuminate\Database\QueryException $e) {
                     return response()->json([
                         'status' => false,
-                        'message' => 'Data gagal dihapus! (terdapat tabel lain yang terkait dengan data ini)'
+                        'message' => 'Data failed to delete! There are other tables associated with this data'
                     ]);
                 }
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => 'Data not found'
                 ]);
             }
         }

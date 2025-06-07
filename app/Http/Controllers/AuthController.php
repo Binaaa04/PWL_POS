@@ -23,21 +23,21 @@ class AuthController extends Controller
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'status' => true,
-                    'message' => 'Login Berhasil',
+                    'message' => 'Login success',
                     'redirect' => url('/')
                 ]);
             }
-            return redirect('/'); // login berhasil via form biasa
+            return redirect('/'); // login success via form biasa
         }
     
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Login Gagal'
+                'message' => 'Failed Login'
             ]);
         }
     
-        return redirect(to: 'login')->withErrors(['login' => 'Username atau password salah.']);
+        return redirect(to: 'login')->withErrors(['login' => 'Incorrect username or password']);
     }
 
 public function postregister(Request $request)
@@ -48,11 +48,11 @@ public function postregister(Request $request)
         'password' => 'required|string|min:6|confirmed',
     ]);
 
-    // Ambil level_id dari level_name = 'Customer'
-    $level = \App\Models\Levelm::where('level_name', 'Customer')->first();
+    // Ambil level_id dari level_nama = 'Customer'
+    $level = \App\Models\Levelm::where('level_nama', 'Customer')->first();
 
     if (!$level) {
-        return back()->withErrors(['role' => 'Level Customer tidak ditemukan.']);
+        return back()->withErrors(['role' => 'Customer Role not found']);
     }
 
     $user = \App\Models\Userm::create([

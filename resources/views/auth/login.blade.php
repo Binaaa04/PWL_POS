@@ -102,7 +102,7 @@
                             if (response.status) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Berhasil',
+                                title: 'success',
                                 text: response.message,
                             }).then(function () {
                                 window.location = response.redirect;

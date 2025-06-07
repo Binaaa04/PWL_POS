@@ -1,20 +1,16 @@
 <?php 
 namespace App\Http\Controllers;
 
-use App\Models\Barangm;
-use App\Models\LevelModel; 
-use App\Models\BarangModel;
-use App\Models\Kategorim;
-use App\Models\KategoriModel;
 use App\Models\Levelm;
+use App\Models\Barangm;
+use App\Models\Kategorim;
 use Illuminate\Http\Request; 
-use Illuminate\Support\Facades\Hash; 
-use Illuminate\Support\Facades\Validator; 
+use Barryvdh\DomPDF\Facade\Pdf;
 use PhpOffice\PhpSpreadsheet\IOFactory; 
 use Yajra\DataTables\Facades\DataTables;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-use function Termwind\render;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Illuminate\Support\Facades\Validator; 
 
 class BarangController extends Controller 
 { 
@@ -22,8 +18,8 @@ class BarangController extends Controller
     public function index (){
         $activeMenu = 'barang'; 
         $breadcrumb = (object) [ 
-            'title' => 'Data Barang', 
-            'list' => ['Home', 'Barang'] 
+            'title' => 'Item Data', 
+            'list' => ['Home', 'Item'] 
         ]; 
  
         $kategori = Kategorim::select('kategori_id', 'kategori_nama')->get(); 
@@ -59,7 +55,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
                 $btn = '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id 
 . '/show_ajax').'\')" class="btn btn-info btn-sm">Detail</button> '; 
                 $btn .= '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/edit_ajax').'\')" class="btn btn-warning btn-sm">Edit</button> '; 
-                $btn .= '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/delete_ajax').'\')" class="btn btn-danger btn-sm">Hapus</button> '; 
+                $btn .= '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/delete_ajax').'\')" class="btn btn-danger btn-sm">Delete</button> '; 
                 return $btn; 
             }) 
             ->rawColumns(['action']) // ada teks html 
@@ -88,7 +84,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             if($validator->fails()){ 
                 return response()->json([ 
                     'status' => false, 
-                    'message' => 'Validasi Gagal', 
+                    'message' => 'Failed Validation', 
                     'msgField' => $validator->errors() 
                 ]); 
             } 
@@ -96,7 +92,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             Barangm::create($request->all()); 
             return response()->json([ 
                 'status' => true, 
-                'message' => 'Data berhasil disimpan' 
+                'message' => 'Data data saved successfully' 
             ]); 
         } 
         redirect('/'); 
@@ -116,7 +112,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             $rules = [ 
                 'kategori_id' => ['required', 'integer', 'exists:m_kategori,kategori_id'], 
                 'barang_kode' => ['required', 'min:3', 'max:20', 
-'unique:m_barang,barang_kode, '. $id .',barang_id'], 
+'unique:m_barang,barang_kode,'.$id.',barang_id'], 
                 'barang_nama' => ['required', 'string', 'max:100'], 
                 'harga_beli' => ['required', 'numeric'], 
                 'harga_jual' => ['required', 'numeric'], 
@@ -127,7 +123,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             if ($validator->fails()) { 
                 return response()->json([ 
                     'status' => false, // respon json, true: berhasil, false: gagal 
-                    'message' => 'Validasi gagal.', 
+                    'message' => 'Failed Validation', 
                     'msgField' => $validator->errors() // menunjukkan field mana yang error 
                 ]); 
             } 
@@ -137,12 +133,12 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
                 $check->update($request->all()); 
                 return response()->json([ 
                     'status' => true, 
-                    'message' => 'Data berhasil diupdate' 
+                    'message' => 'Data successfully updated' 
                 ]); 
             } else{ 
                 return response()->json([ 
                     'status' => false, 
-                    'message' => 'Data tidak ditemukan' 
+                    'message' => 'Data not found' 
                 ]); 
             } 
         } 
@@ -163,12 +159,12 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
                 $barang->delete(); // barang di hapus 
                 return response()->json([ 
                     'status' => true, 
-                    'message' => 'Data berhasil dihapus' 
+                    'message' => 'Data successfully deleted' 
                 ]); 
             }else{ 
                 return response()->json([ 
                     'status' => false, 
-                    'message' => 'Data tidak ditemukan' 
+                    'message' => 'Data not found' 
                 ]); 
             } 
         } 
@@ -192,7 +188,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             if($validator->fails()){ 
                 return response()->json([ 
                     'status' => false, 
-                    'message' => 'Validasi Gagal', 
+                    'message' => 'Failed Validation', 
                     'msgField' => $validator->errors() 
                 ]); 
             } 
@@ -227,12 +223,12 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
                 }
                                 return response()->json([ 
                     'status' => true, 
-                    'message' => 'Data berhasil diimport' 
+                    'message' => 'Data successfully imported' 
                 ]); 
             }else{ 
                 return response()->json([ 
                     'status' => false, 
-                    'message' => 'Tidak ada data yang diimport' 
+                    'message' => 'No data imported' 
                 ]); 
             } 
         } 
@@ -243,7 +239,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
         ->orderBy('kategori_id')
         ->with('kategori')
         ->get();
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet ->setCellValue('A1','No');
@@ -274,7 +270,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
         $filename = 'Data Barang'.date('Y-m-d H:i:s').'.xlsx';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-control:max-age=0');
         header('Cache-control:max-age=1');
         header('Expires:  Mon, 26 Jul 1997 05:00:00 GMT');
@@ -285,16 +281,16 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
         $writer->save('php://output');
         exit;
     }
-    public function export_pdf(){
+    public function export_pdf()
+    {
         $barang = Barangm::select('kategori_id','barang_kode','barang_nama','harga_beli','harga_jual')
-        ->orderBy('kategori_id')
-        ->with('kategori')
-        ->get();
-
-        $pdf = Pdf::loadView('item.export_pdf',['barang'=>$barang]);
-        $pdf ->setPaper('a4','potrait');
-        $pdf -> setOption("isRemoteEnabled",true);
-        $pdf -> render();
-        return $pdf->stream('Data Barang'.date('Y-m-d H:i:s').'.pdf');
+            ->orderBy('kategori_id')
+            ->with('kategori')
+            ->get();
+    
+        $pdf = Pdf::loadView('item.export_pdf', ['barang' => $barang]);
+        $pdf->setPaper('a4', 'portrait');
+        
+        return $pdf->stream('Data-Barang-' . date('Y-m-d_His') . '.pdf');
     }
-}
+    }

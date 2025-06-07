@@ -19,6 +19,6 @@ class AuthorizeUser
         if(in_array($user_role,$roles)){
             return $next($request);
         }
-        abort(403, 'Forbidden. Kamu tidak punya akses ke halaman ini');
+        abort(403, 'Forbidden. You dont have access to this page');
     }
 }
